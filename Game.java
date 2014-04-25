@@ -37,12 +37,12 @@ public class Game
         Room zara, hm, pasillo1, pasillo2, pullbear, berska;
       
         // create the rooms
-        zara = new Room("Bienvenido a Zara");
-        hm = new Room("Bienvenido a H&M");
-        pasillo1 = new Room("Bienvenido a Espacio León");
-        pasillo2 = new Room("Bienvenido a Espacio León");
-        pullbear = new Room("Bienvenido a Pull&Bear");
-        berska = new Room("Bienvenido a Berska");
+        zara = new Room("Zara");
+        hm = new Room("H&M");
+        pasillo1 = new Room("el pasillo principal");
+        pasillo2 = new Room("el segundo pasillo");
+        pullbear = new Room("Pull&Bear");
+        berska = new Room("Berska");
         
         // initialise room exits
         zara.setExits(pullbear, pasillo1, null, null);
@@ -83,21 +83,8 @@ public class Game
         System.out.println("Espacio León is a old, incredibly boring shopping mall.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Exits: ");
-        if(currentRoom.northExit != null) {
-            System.out.print("north ");
-        }
-        if(currentRoom.eastExit != null) {
-            System.out.print("east ");
-        }
-        if(currentRoom.southExit != null) {
-            System.out.print("south ");
-        }
-        if(currentRoom.westExit != null) {
-            System.out.print("west ");
-        }
-        System.out.println();
+        
+        printLocationInfo();
     }
 
     /**
@@ -178,7 +165,28 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
-            System.out.println("You are " + currentRoom.getDescription());
+            printLocationInfo();
+    }
+}
+
+    /** 
+     * "Quit" was entered. Check the rest of the command to see
+     * whether we really quit the game.
+     * @return true, if this command quits the game, false otherwise.
+     */
+    private boolean quit(Command command) 
+    {
+        if(command.hasSecondWord()) {
+            System.out.println("Quit what?");
+            return false;
+        }
+        else {
+            return true;  // signal that we want to quit
+        }
+    }
+    
+    private void printLocationInfo(){
+        System.out.println("Estás en " + currentRoom.getDescription());
             System.out.print("Exits: ");
             if(currentRoom.northExit != null) {
                 System.out.print("north ");
@@ -196,19 +204,3 @@ public class Game
         }
     }
 
-    /** 
-     * "Quit" was entered. Check the rest of the command to see
-     * whether we really quit the game.
-     * @return true, if this command quits the game, false otherwise.
-     */
-    private boolean quit(Command command) 
-    {
-        if(command.hasSecondWord()) {
-            System.out.println("Quit what?");
-            return false;
-        }
-        else {
-            return true;  // signal that we want to quit
-        }
-    }
-}
