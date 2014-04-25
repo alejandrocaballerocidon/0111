@@ -34,23 +34,25 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room zara, hm, pasillo1, pasillo2, pullbear, berska;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        zara = new Room("Bienvenido a Zara");
+        hm = new Room("Bienvenido a H&M");
+        pasillo1 = new Room("Bienvenido a Espacio León");
+        pasillo2 = new Room("Bienvenido a Espacio León");
+        pullbear = new Room("Bienvenido a Pull&Bear");
+        berska = new Room("Bienvenido a Berska");
         
         // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+        zara.setExits(pullbear, pasillo1, null, null);
+        hm.setExits(pasillo1, null, null, null);
+        pasillo1.setExits(pasillo2, berska, hm, zara);
+        pasillo2.setExits(null, null, pasillo1, pullbear);
+        pullbear.setExits(null, pasillo2, zara, null);
+        berska.setExits(null, null, null, pasillo1);
 
-        currentRoom = outside;  // start game outside
+        currentRoom = pasillo1;  // start game outside
     }
 
     /**
@@ -77,8 +79,8 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to Espacio León!");
+        System.out.println("Espacio León is a old, incredibly boring shopping mall.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         System.out.println("You are " + currentRoom.getDescription());
