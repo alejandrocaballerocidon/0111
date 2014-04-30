@@ -81,10 +81,42 @@ public class Room
             sala = westExit;
         }
         
-        if (direction.equals("north")){
-            sala = northExit;
+        if (direction.equals("southwest")){
+            sala = southwestExit;
         }
         
         return sala;
+    }
+    
+    /**
+     * Return a description of the room's exits.
+     * For example: "Exits: north east west"
+     *
+     * @ return A description of the available exits.
+     */
+    public String getExitString(){
+        String exitsDescription = "Exits ";
+        
+        if(northExit != null){
+            exitsDescription = "north ";
+        }
+        
+        if(southExit != null){
+            exitsDescription = "south ";
+        }
+        
+        if(eastExit != null){
+            exitsDescription = "east ";
+        }
+        
+        if(westExit != null){
+            exitsDescription = "west ";
+        }
+        
+        if(southwestExit != null){
+            exitsDescription = "southwest ";
+        }
+        
+        return exitsDescription;
     }
 }

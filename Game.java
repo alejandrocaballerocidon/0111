@@ -11,7 +11,7 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael KÃ¶lling and David J. Barnes
+ * @author  Michael Kölling and David J. Barnes
  * @version 2011.07.31
  */
 
@@ -19,7 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-
+        
     /**
      * Create the game and initialise its internal map.
      */
@@ -34,25 +34,26 @@ public class Game
      */
     private void createRooms()
     {
-        Room tierra, agua, elementos, aire, fuego, salida, entrada;
-
+        Room zara, hm, pasillo1, pasillo2, pullbear, berska, salida;
+      
         // create the rooms
-        tierra = new Room ("estas en la sala del elemento tierra, no es comestible");
-        agua = new Room("estas en la sala del elemento agua, no te ahogues");
-        elementos = new Room("estas en el centro, escoge el elemento que quieres ver");
-        aire = new Room("estas en la sala del elemento aire, no te quedes sin el");
-        fuego = new Room("estas en la sala del elemento fuego, cuidado no te quemes");
-        salida = new Room("acabas de salir del museo, hasta otro rato");
-        entrada = new Room("acabas de entrar en el museo, bienvenido");
+        zara = new Room("Zara");
+        hm = new Room("H&M");
+        pasillo1 = new Room("el pasillo principal");
+        pasillo2 = new Room("el segundo pasillo");
+        pullbear = new Room("Pull&Bear");
+        berska = new Room("Berska");
+        salida = new Room("Exit");
         // initialise room exits
-        tierra.setExits(null, null, elementos, null, null, null);
-        agua.setExits(null, elementos, null, null, null, null);
-        elementos.setExits(tierra, aire, fuego, agua, null, entrada);
-        aire.setExits(null, null, null, elementos, null, null);
-        fuego.setExits(elementos, null, null, null, salida, null);
-        salida.setExits(null, null, null, null, null, null);
-
-        currentRoom = elementos;  // start game outside
+        zara.setExits(pullbear, pasillo1, null, null, null);
+        hm.setExits(pasillo1, null, null, salida, null);
+        pasillo1.setExits(pasillo2, berska, hm, null, zara);
+        pasillo2.setExits(null, null, pasillo1, null, pullbear);
+        pullbear.setExits(null, pasillo2, zara, null, null);
+        berska.setExits(null, null, null, null, pasillo1);
+        salida.setExits(null, null, null, null,null);
+        
+        currentRoom = pasillo1;  // start game outside
     }
 
     /**
@@ -64,7 +65,7 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-
+                
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -79,10 +80,11 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to Espacio León!");
+        System.out.println("Espacio León is a old, incredibly boring shopping mall.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
+        
         printLocationInfo();
     }
 
@@ -145,8 +147,7 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = null;
-        Room siguienteHabitacion = currentRoom.getExit(direction);
+        Room nextRoom = currentRoom.getExit(direction);
         
         if (nextRoom == null) {
             System.out.println("There is no door!");
@@ -154,7 +155,6 @@ public class Game
         else {
             currentRoom = nextRoom;
             printLocationInfo();
-
         }
     }
 
@@ -173,12 +173,11 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
-
-    private void printLocationInfo()
-    {
-        System.out.println("tu estas " + currentRoom.getDescription());
-        System.out.print(currentRoom.getExitString());
+    
+    private void printLocationInfo(){
+        System.out.println("Estás en " + currentRoom.getDescription());
+        System.out.println(currentRoom.getExitString());
         System.out.println();
+        }
     }
 
-}
