@@ -34,7 +34,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room zara, hm, pasillo1, pasillo2, pullbear, berska, salida;
+        Room zara, hm, pasillo1, pasillo2, pullbear, berska, salidaSO, salidaNO;
       
         // create the rooms
         zara = new Room("Zara");
@@ -43,15 +43,18 @@ public class Game
         pasillo2 = new Room("el segundo pasillo");
         pullbear = new Room("Pull&Bear");
         berska = new Room("Berska");
-        salida = new Room("Exit");
+        salidaSO = new Room("Exit");
+        salidaNO = new Room("Exit");
+        
         // initialise room exits
-        zara.setExits(pullbear, pasillo1, null, null, null);
-        hm.setExits(pasillo1, null, null, salida, null);
-        pasillo1.setExits(pasillo2, berska, hm, null, zara);
-        pasillo2.setExits(null, null, pasillo1, null, pullbear);
-        pullbear.setExits(null, pasillo2, zara, null, null);
-        berska.setExits(null, null, null, null, pasillo1);
-        salida.setExits(null, null, null, null,null);
+        zara.setExits(pullbear, pasillo1, null, null, null, null);
+        hm.setExits(pasillo1, null, null, salidaSO, null, null);
+        pasillo1.setExits(pasillo2, berska, hm, null, zara, null);
+        pasillo2.setExits(null, null, pasillo1, null, pullbear, salidaNO);
+        pullbear.setExits(null, pasillo2, zara, null, null, null);
+        berska.setExits(null, null, null, null, pasillo1, null);
+        salidaSO.setExits(null, null, null, null,null, null);
+        salidaNO.setExits(null, null, null, null,null, null);
         
         currentRoom = pasillo1;  // start game outside
     }
